@@ -1,0 +1,44 @@
+<!-- example.html -->
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Template</title>
+  </head>
+  <body>
+    <h1>Example Template</h1>
+    {% comment %}
+    <p>Parameter 1: {{ param1 }}</p>
+    <p>Parameter 2: {{ param2 }}</p>
+    {% endcomment %} {% if qr_code %}
+    <img
+      src="data:image/png;base64,{{ qr_code|base64_encode }}"
+      alt="QR Code"
+    />
+    {% else %}
+    <p>No QR Code</p>
+    {% endif %}
+    <p>
+      account : {{ invoice.payment_account_address }} </br>
+      network : {{ invoice.token.network.network_name }} </br>
+      token : {{ invoice.token.symbol }} </br>
+      status : {{ invoice.status }} </br>
+      amount : {{ invoice.amount }} </br>
+      paid by : {{ invoice.customer_address }} </br>
+      expiry : {{ "tbd" }} </br>
+      message : {{ invoice.message }} </br>
+      transaction : {{ invoice.transacrion_details }} </br>
+
+    </p>
+  </body>
+  <script>
+    // Function to refresh the page
+    function refreshPage() {
+      location.reload();
+    }
+    
+    // Refresh the page every 30 seconds
+    setTimeout(refreshPage, 15000);
+  </script>
+</html>
