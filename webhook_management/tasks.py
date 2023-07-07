@@ -19,7 +19,17 @@ import requests
 def webhook_request(event:str, data:dict, user_id:int):
     if event in WebHookRequest.EVENT_TYPES_LIST:
         for wh in WebHookSecret.objects.filter(user__id = user_id,enabled=True):
-            data.update({"event": event, "metadata":{}})
+            data.update({"event": event})
+            
+            if data.get("metadata", None) is None:
+                data.update({"metadata": {}})
+                if data.get("invoice_id", None) is not None:
+                    if Invoice.objects.filter(id=data["invoice_id"]).exists():
+                        inv = Invoice.objects.get(id=data["invoice_id"])
+                        if inv.metadata:
+                            data["metadata"] = inv.metadata
+                
+            
             data = encrypt_message(json.dumps(data), stringToBytes(wh.sec_key))
             data = {"data": data}
             whr = WebHookRequest(
