@@ -91,5 +91,3 @@ Contributions are welcome! If you'd like to contribute to PayMesh, please follow
 - [x] Refunds
 - [x] Webhook support
 - [ ] API key access management
-
-Feel free to customize this template further based on your project's specific details and needs.
